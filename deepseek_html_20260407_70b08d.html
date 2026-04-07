@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ақсу-Жабағылы | Батыс Тянь-Шань інжу-маржаны</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fefcf5;
+            color: #1e2f1c;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8e0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b6e3b;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1f4f1a, #4a8b3c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #4a5b44;
+            max-width: 700px;
+            margin: 0 auto 48px auto;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            padding: 16px 0;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #2c6e2c, #5fa04f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2c3a2b;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover {
+            color: #3c8c3a;
+            transform: translateY(-2px);
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(115deg, #1e3b1a80, #214d1c80), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format') center/cover no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+        .hero-content {
+            z-index: 3;
+            max-width: 900px;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 32px;
+            font-weight: 400;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .btn {
+            display: inline-block;
+            background: #f5b042;
+            color: #1e3a1a;
+            padding: 14px 34px;
+            border-radius: 40px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background: #ffc857;
+            transform: scale(1.03);
+        }
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 15px 35px rgba(0, 32, 0, 0.08);
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px rgba(46, 87, 42, 0.2);
+        }
+        .card-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+        }
+        .card-content {
+            padding: 24px;
+        }
+        .card-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 50px 0 20px;
+        }
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 30px 24px;
+            border-radius: 48px;
+            min-width: 180px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2e7d32;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            border-radius: 28px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            height: 260px;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s;
+            box-shadow: 0 12px 22px rgba(0,0,0,0.1);
+        }
+        .gallery-item:hover {
+            transform: scale(1.02);
+            filter: brightness(1.05);
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .close-modal {
+            position: absolute;
+            top: 28px;
+            right: 38px;
+            font-size: 2.8rem;
+            color: white;
+            cursor: pointer;
+        }
+        footer {
+            background: #1c2e1a;
+            color: #dbebd6;
+            padding: 48px 0 24px;
+            text-align: center;
+        }
+        .footer-social i {
+            font-size: 1.8rem;
+            margin: 0 12px;
+            color: #cbe5c4;
+            transition: 0.2s;
+        }
+        .footer-social i:hover {
+            color: #f5b042;
+            transform: translateY(-5px);
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(35px);
+        }
+        .map-container {
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        iframe {
+            width: 100%;
+            height: 380px;
+            border: 0;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .section-title { font-size: 2rem; }
+            .nav-links { gap: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo"><i class="fas fa-mountain"></i> Aqsu-Jabagly</div>
+        <div class="nav-links">
+            <a href="#about">Қорық туралы</a>
+            <a href="#nature">Флора & Фауна</a>
+            <a href="#tours">Маршруттар</a>
+            <a href="#gallery">Галерея</a>
+        </div>
+    </div>
+</div>
+
+<section class="hero" id="hero">
+    <div class="floating-bg" id="floatingBg"></div>
+    <div class="hero-content">
+        <h1 id="heroTitle">Ақсу Жабағылы</h1>
+        <p id="heroSub">Батыс Тянь-Шань жүрегіндегі көне қорық</p>
+        <a href="#about" class="btn" id="exploreBtn">Зерттеу <i class="fas fa-leaf"></i></a>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <div class="section-title scroll-reveal">Қазақстанның табиғи інжу-маржаны</div>
+        <div class="section-subtitle scroll-reveal">Орталық Азиядағы тұңғыш қорық (1926 ж.), ЮНЕСКО Әлемдік мұра нысаны</div>
+        <div class="stats-row" id="statsContainer">
+            <div class="stat-item scroll-reveal"><div class="stat-number" data-target="1926">0</div><div>Құрылған жылы</div></div>
+            <div class="stat-item scroll-reveal"><div class="stat-number" data-target="131934">0</div><div>Ауданы (га)</div></div>
+            <div class="stat-item scroll-reveal"><div class="stat-number" data-target="1312">0</div><div>Өсімдік түрі</div></div>
+            <div class="stat-item scroll-reveal"><div class="stat-number" data-target="327">0</div><div>Жануарлар түрі</div></div>
+        </div>
+        <div class="cards-grid" style="margin-top: 40px;">
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3>Бірегей ландшафт</h3><p>Шарын, сарқырамалар, альпі шалғындары. Ақсу шатқалының тереңдігі 500 м-ге жетеді.</p></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3>Тянь-Шань эндемиктері</h3><p>Грейг қызғалдағы, Тянь-Шань шыршасы, арқар, қар барысы.</p></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1509319117199-3f82e6d1bf84?q=80&w=1974&auto=format');"></div>
+                <div class="card-content"><h3>ЮНЕСКО мұрасы</h3><p>Биосфера резерваттар желісіне кіреді, тау экожүйесін қорғайды.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="nature" style="background: #f5f9f0;">
+    <div class="container">
+        <div class="section-title scroll-reveal">Флора мен фауна</div>
+        <div class="section-subtitle scroll-reveal">1300-ден астам өсімдік және 300+ омыртқалылар — табиғи жәннат</div>
+        <div class="cards-grid">
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1575387392524-33f0cf70aef1?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3><i class="fas fa-paw"></i> Қар барысы</h3><p>Аңызға айналған ірбіс, өте сирек кездесетін жыртқыш. Ақсу-Жабағылы — соңғы мекендердің бірі.</p></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3><i class="fas fa-tree"></i> Тянь-Шань шыршасы</h3><p>Реликті ормандар, ғасырлық ағаштар, таза тау ауасы.</p></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1497206365907-f5e630693df0?q=80&w=2080&auto=format');"></div>
+                <div class="card-content"><h3><i class="fas fa-hippo"></i> Тянь-Шань аюы</h3><p>Қоңыр аюдың ірі таралған түршесі, қорықтың эндемигі.</p></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1488459716781-31db52582fe9?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3><i class="fas fa-feather-alt"></i> Бүркіт & Құмай</h3><p>Гималай құмайы және берқұт шатқалдар үстінде қалықтайды.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="tours">
+    <div class="container">
+        <div class="section-title scroll-reveal">Туристік маршруттар</div>
+        <div class="section-subtitle scroll-reveal">Интерактивті жолдар, атпен жорықтар және асулар</div>
+        <div class="cards-grid">
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1458442310124-dde6edb43d10?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3>Ақсу сарқырамасы</h3><p>Шатқалдағы 30 метрлік әсем сарқырама. Экожол 5 км.</p><span style="color:#3c8c3a;"><i class="fas fa-hiking"></i> Жеңіл маршрут</span></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format');"></div>
+                <div class="card-content"><h3>Жабағылы шатқалы</h3><p>Альпі шалғындары, арша тоғайлары, көрініс алаңдары.</p><span style="color:#3c8c3a;"><i class="fas fa-mountain"></i> Орташа қиындық</span></div>
+            </div>
+            <div class="card scroll-reveal">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2074&auto=format');"></div>
+                <div class="card-content"><h3>Сайрам-Су шыңы</h3><p>Тәжірибелі альпинистерге арналған биік маршрут, жоталарға панорама.</p><span style="color:#3c8c3a;"><i class="fas fa-route"></i> Қиын</span></div>
+            </div>
+        </div>
+        <div class="map-container scroll-reveal" style="margin-top: 48px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47740.756501417774!2d70.13898927475607!3d42.40829082300916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38950f5c16de2e9f%3A0xee68edb74626a65e!2z0JDQutGB0YMg0JbQsNCx0LDQs9i7INGB0LDRgtGL!5e0!3m2!1sru!2skz!4v1712160000000!5m2!1sru!2skz" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<section id="gallery" style="background: #fff9ef;">
+    <div class="container">
+        <div class="section-title scroll-reveal">Көрнекі саяхат</div>
+        <div class="section-subtitle scroll-reveal">Қорық сұлулығы — үлкейту үшін басыңыз</div>
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format');"></div>
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1509319117199-3f82e6d1bf84?q=80&w=1974&auto=format" style="background-image: url('https://images.unsplash.com/photo-1509319117199-3f82e6d1bf84?q=80&w=1974&auto=format');"></div>
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format');"></div>
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2074&auto=format" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2074&auto=format');"></div>
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=2073&auto=format" style="background-image: url('https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=2073&auto=format');"></div>
+            <div class="gallery-item" data-img="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format');"></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-social">
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-telegram"></i>
+        </div>
+        <p style="margin-top: 24px;">© 2026 Ақсу-Жабағылы мемлекеттік табиғи қорығы | Табиғатты бірге қорғаймыз</p>
+    </div>
+</footer>
+
+<div id="imageModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <div class="modal-content">
+        <img id="modalImg" src="" alt="үлкейтілген сурет">
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- anime.js фондық анимация ----------
+        function initFloatingShapes() {
+            const container = document.getElementById('floatingBg');
+            if(!container) return;
+            for(let i=0; i<12; i++) {
+                let shape = document.createElement('div');
+                shape.classList.add('shape');
+                let size = Math.random() * 180 + 40;
+                shape.style.width = size + 'px';
+                shape.style.height = size + 'px';
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.background = `rgba(245, 225, 160, ${Math.random() * 0.2 + 0.05})`;
+                shape.style.borderRadius = '50%';
+                shape.style.position = 'absolute';
+                container.appendChild(shape);
+                anime({
+                    targets: shape,
+                    translateX: [0, anime.random(-40, 40)],
+                    translateY: [0, anime.random(-30, 30)],
+                    duration: anime.random(8000, 15000),
+                    easing: 'easeInOutSine',
+                    direction: 'alternate',
+                    loop: true
+                });
+            }
+        }
+
+        // ---------- сандар анимациясы ----------
+        function animateNumbers() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(el => {
+                const target = parseInt(el.getAttribute('data-target'));
+                if(!target) return;
+                let current = 0;
+                let updateCounter = () => {
+                    let increment = target / 55;
+                    if(current < target) {
+                        current += increment;
+                        if(current > target) current = target;
+                        el.innerText = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        el.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // ---------- скролл анимациясы (reveal) + anime.js көмегімен ----------
+        function handleScrollReveal() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            reveals.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                if(rect.top < windowHeight - 80) {
+                    if(!el.classList.contains('revealed')) {
+                        el.classList.add('revealed');
+                        anime({
+                            targets: el,
+                            opacity: [0, 1],
+                            translateY: [35, 0],
+                            duration: 800,
+                            easing: 'easeOutCubic'
+                        });
+                    }
+                }
+            });
+        }
+
+        // ---------- галерея модаль ----------
+        function initGallery() {
+            const items = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeBtn = document.querySelector('.close-modal');
+            items.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const imgUrl = item.getAttribute('data-img');
+                    if(imgUrl) {
+                        modalImg.src = imgUrl;
+                        modal.classList.add('active');
+                        anime({
+                            targets: modal,
+                            opacity: [0,1],
+                            duration: 300,
+                            easing: 'linear'
+                        });
+                    }
+                });
+            });
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) modal.classList.remove('active');
+            });
+        }
+
+        // ---------- карта мен батырмаларға әсерлі анимация ----------
+        function animateHeroOnLoad() {
+            anime({
+                targets: '#heroTitle',
+                translateY: [40, 0],
+                opacity: [0,1],
+                duration: 1200,
+                easing: 'easeOutQuad'
+            });
+            anime({
+                targets: '#heroSub',
+                translateY: [30, 0],
+                opacity: [0,1],
+                delay: 300,
+                duration: 1000,
+                easing: 'easeOutQuad'
+            });
+            anime({
+                targets: '#exploreBtn',
+                scale: [0.8, 1],
+                opacity: [0,1],
+                delay: 700,
+                duration: 800,
+                easing: 'spring(1, 80, 10, 0)'
+            });
+        }
+
+        // карточкалардың hover кезінде анимация (anime.js қосымша әсер)
+        function addCardHoverAnime() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    anime({
+                        targets: card,
+                        scale: 1.02,
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    anime({
+                        targets: card,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+        }
+
+        // Навбар фон өзгерісі
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 253, 245, 0.98)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+                } else {
+                    navbar.style.background = 'rgba(255, 253, 245, 0.92)';
+                    navbar.style.boxShadow = '0 2px 15px rgba(0,0,0,0.05)';
+                }
+            });
+        }
+
+        // Сандарды скролл кезінде бір рет қана іске қосу
+        let numbersAnimated = false;
+        function checkNumbersOnScroll() {
+            const statsSection = document.getElementById('about');
+            if(!statsSection) return;
+            window.addEventListener('scroll', () => {
+                if(!numbersAnimated) {
+                    const rect = statsSection.getBoundingClientRect();
+                    if(rect.top < window.innerHeight - 100) {
+                        numbersAnimated = true;
+                        animateNumbers();
+                    }
+                }
+            });
+            // тексеру бірден
+            const rect = statsSection.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 100) {
+                numbersAnimated = true;
+                animateNumbers();
+            }
+        }
+
+        // барлық анимацияларды іске қосу
+        window.addEventListener('DOMContentLoaded', () => {
+            initFloatingShapes();
+            animateHeroOnLoad();
+            handleScrollReveal();
+            initGallery();
+            addCardHoverAnime();
+            handleNavbarScroll();
+            checkNumbersOnScroll();
+            window.addEventListener('scroll', handleScrollReveal);
+            // анимацияланған фокус үшін сілтемелерге тегіс жылжу
+            document.querySelectorAll('.nav-links a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetEl = document.getElementById(targetId);
+                    if(targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+            document.querySelector('#exploreBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+            });
+            // қосымша бірінші скролл кезінде көрінбейтіндерді ашу
+            setTimeout(() => handleScrollReveal(), 200);
+        });
+    })();
+</script>
+</body>
+</html>
